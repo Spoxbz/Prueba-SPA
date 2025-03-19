@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  border: 1px solid #fff;
+  align-items: center;
+  width: 300px;
+  height: 100px;
+}
+
+#contact-list {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  gap: 10px;
+  padding: 1.5rem;
+}
+#contact-list li {
+  list-style-type: none;
+}

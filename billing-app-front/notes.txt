@@ -1,0 +1,87 @@
+El error **"Cannot set properties of null (setting 'innerHTML')"** ocurre porque `document.querySelector("#content")` está devolviendo `null`. Esto significa que en algunos casos, el `#content` no existe cuando el `loadRoute()` intenta modificarlo.
+
+## 🔍 Posible causa:
+Cuando navegas a `loginPage.html` o `signupPage.html`, **reemplazas todo el contenido de `#app`**, lo que elimina `#content`. Luego, cuando intentas modificar `#content.innerHTML`, el elemento ya no está en el DOM.
+
+---
+
+### ✅ Solución:
+Antes de modificar `innerHTML`, primero verifica si `#content` existe. También, si estás en `login` o `signup`, en lugar de intentar modificar `#content`, trabaja directamente con `#app`.
+
+```js
+async function loadRoute() {
+  const path = window.location.pathname;
+  const page = routes[path] || routes[ROUTES.LOGIN.BASE];
+
+  try {
+    if (typeof page === "string") {
+      const response = await fetch(page);
+      const html = await response.text();
+
+      if (path === ROUTES.LOGIN.BASE || path === ROUTES.SIGNUP.BASE3) {
+        document.querySelector("#app").innerHTML = html;
+      } else {
+        const contentElement = document.querySelector("#content");
+        if (contentElement) {
+          contentElement.innerHTML = html;
+        }
+      }
+    } else if (typeof page === "function") {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = page();
+
+      if (path === ROUTES.LOGIN.BASE || path === ROUTES.SIGNUP.BASE3) {
+        document.querySelector("#app").replaceChildren(tempDiv);
+      } else {
+        const contentElement = document.querySelector("#content");
+        if (contentElement) {
+          contentElement.replaceChildren(tempDiv);
+        }
+      }
+    }
+
+    // Forzar activación de HTMX si es necesario
+    if ([ROUTES.CONTACT, ROUTES.SIGNUP.BASE3].includes(path)) {
+      console.log(`Página ${path} cargada, activando HTMX ...`);
+      htmx.process(document.querySelector("#content"));
+    }
+  } catch (error) {
+    console.error("Error cargando la página (consola): ", error);
+    
+    // Asegurar que solo se actualiza #content si existe
+    const contentElement = document.querySelector("#content");
+    if (contentElement) {
+      contentElement.innerHTML = "<h2>Error al cargar la página :'D</h2>";
+    }
+  }
+}
+```
+
+---
+
+### 🔄 Ajustes en el botón "Volver":
+El problema persiste porque cuando estás en `loginPage.html`, el botón usa `navigateTo('/')`, pero `#content` no existe en ese contexto.
+
+#### 🚀 Solución:
+1. Asegúrate de que el botón "Volver" redirija a una ruta existente.
+2. Si la navegación es desde `login` o `signup`, fuerza la recarga de `start.js`.
+
+```html
+<button class="btn" onclick="navigateToWithReload('/')">Volver</button>
+
+<script>
+  function navigateToWithReload(url) {
+    navigateTo(url);
+    location.reload(); // Asegura que el layout original se restaure
+  }
+</script>
+```
+
+---
+
+### 🎯 Resultado:
+- Se evitan errores de `null`.
+- `#content` solo se actualiza si existe.
+- Los botones de navegación funcionan correctamente.
+
+Pruébalo y dime si te funciona 🚀.

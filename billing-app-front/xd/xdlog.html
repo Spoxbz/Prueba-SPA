@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consumir API</title>
+  </head>
+  <body>
+    <h1>Consumir API con JavaScript</h1>
+    <button id="loginBtn">Iniciar Sesión</button>
+
+    <script>
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        // Datos para la petición POST
+        const data = {
+          email: "sistemas@funhogar.ec",
+          password: "12345",
+        };
+
+        // Realizando la petición POST
+        fetch("http://10.0.12.140/api/public/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error en la solicitud");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Mostramos el token en la consola
+            console.log("Token devuelto:", data.token);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
