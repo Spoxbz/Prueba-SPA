@@ -4,7 +4,7 @@ class Sidebar extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this,
       (this.shadowRoot.innerHTML = `
-            <div class 
+            <div class
         `);
   }
 }
