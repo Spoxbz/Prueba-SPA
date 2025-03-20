@@ -12,6 +12,7 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "alpinejs": "^3.14.9"
   }
 }
