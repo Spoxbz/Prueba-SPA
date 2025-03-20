@@ -1,0 +1,90 @@
+Sí, tienes razón en que si usas Vite, al hacer `npm run build`, solo se compilarán los archivos JavaScript y CSS, pero los archivos `.html` en `/src/pages` no se incluirán automáticamente en la carpeta final de `dist`. Esto sucede porque Vite está diseñado para manejar archivos estáticos desde `public/` y empaquetar solo lo que está en `src/`.
+
+---
+
+## 📌 **Opciones para Solucionarlo**
+Tienes tres enfoques posibles:
+
+### 🔹 **Opción 1: Mover las páginas `.html` a la carpeta `public/`**
+Vite no transpila ni mueve archivos dentro de `src` a `dist`, pero sí copia los archivos dentro de `public/` directamente. Para hacer esto:
+
+1. **Mueve `src/pages` a `public/pages`**  
+2. **Ajusta las rutas en `routes.js`** para que apunten a `./pages/home.html`, `./pages/about.html`, etc.
+
+📂 **Nueva estructura**
+```
+📁SPA-PAGEJS
+ ├── 📁public
+ │   ├── 📁pages
+ │   │   ├── home.html
+ │   │   ├── about.html
+ │   │   ├── contact.html
+ │   ├── 📁components
+ │   │   ├── navbar.html
+ ├── 📁src
+ │   ├── 📁router
+ │   │   ├── routes.js
+ │   ├── main.js
+ │   ├── style.css
+ ├── .gitignore
+ ├── index.html
+ ├── package.json
+```
+
+🔹 **Modificación en `routes.js`**
+```js
+export function loadPage(url) {
+  fetch(`/pages/${url}.html`) // Ahora busca en public/pages
+    .then((response) => response.text())
+    .then((html) => {
+      document.querySelector("#app").innerHTML = html;
+    })
+    .catch((error) => console.error("Error cargando la página:", error));
+}
+```
+✅ **Ventaja:** Funciona con Vite sin problemas.  
+❌ **Desventaja:** Los archivos `.html` quedan accesibles directamente desde la URL.
+
+---
+
+### 🔹 **Opción 2: Usar Vite con un plugin para copiar los archivos**
+Si quieres mantener los `.html` en `src/pages`, puedes usar un **plugin de Vite** como [`vite-plugin-static-copy`](https://www.npmjs.com/package/vite-plugin-static-copy) para copiarlos a `dist` en el build.
+
+1. **Instala el plugin**
+```sh
+npm install vite-plugin-static-copy --save-dev
+```
+2. **Modifica `vite.config.js`**
+```js
+import { defineConfig } from "vite";
+import staticCopy from "vite-plugin-static-copy";
+
+export default defineConfig({
+  plugins: [
+    staticCopy({
+      targets: [{ src: "src/pages/*.html", dest: "pages" }],
+    }),
+  ],
+});
+```
+✅ **Ventaja:** Mantienes `src/pages`, pero se copian a `dist/pages` automáticamente.  
+❌ **Desventaja:** Agrega una dependencia extra.
+
+---
+
+### 🔹 **Opción 3: No usar Vite**
+Si no necesitas el soporte de Vite y solo quieres una SPA sin compilación, podrías simplemente organizar los archivos en carpetas sin usar `npm run build`. En este caso, podrías usar un servidor simple como **Live Server** en VS Code o `http-server` de Node.js:
+
+```sh
+npx http-server
+```
+✅ **Ventaja:** No necesitas preocuparte por la compilación.  
+❌ **Desventaja:** Pierdes optimizaciones de Vite como la recarga rápida.
+
+---
+
+## 🚀 **¿Cuál elegir?**
+- **Si quieres seguir con Vite** → Usa **Opción 1** (mueve `.html` a `public/`) o **Opción 2** (usa `vite-plugin-static-copy`).
+- **Si solo quieres algo simple sin Vite** → Usa **Opción 3** y trabaja con archivos estáticos directamente.
+
+¿Quieres que probemos una implementación específica? 🚀
