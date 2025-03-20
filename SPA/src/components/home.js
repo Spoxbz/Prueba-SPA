@@ -1,19 +1,20 @@
 import { navigateTo } from "../router";
 import Counter from "./counter,js";
+import Layout from "./layout";
 
 export default function Home() {
-  const container = document.createElement("div");
-  container.innerHTML = `
+  const content = document.createElement("div");
+  content.innerHTML = `
       <h1>Bienvenido a la Home</h1>
       <button id="goToLogin">Ir a Login</button>
       <div id="dynamic-content"></div>
     `;
 
-  container.querySelector("#goToLogin").addEventListener("click", () => {
+  content.querySelector("#goToLogin").addEventListener("click", () => {
     navigateTo("/login");
   });
 
-  container.querySelector("#dynamic-content").appendChild(Counter());
+  content.querySelector("#dynamic-content").appendChild(Counter());
 
-  return container;
+  return Layout(content);
 }

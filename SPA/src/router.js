@@ -1,16 +1,24 @@
 import ROUTES from "./routes/variable_routes.js";
 import Home from "./components/home.js";
 import Login from "./components/login.js";
+import Dashboard from "./components/dashboard.js";
 
 const routes = {
   [ROUTES.HOME.BASE]: Home,
   [ROUTES.LOGIN.BASE]: Login,
+  [ROUTES.DASHBOARD.BASE]: Dashboard,
 };
 
 // Función para navegar entre rutas
 export function navigateTo(url) {
-  history.pushState({}, "", url);
-  updateView();
+  if (routes[url]) {
+    history.pushState({}, "", url);
+    updateView();
+  } else {
+    console.warn(`Ruta no encontrada: ${url}`);
+    history.pushState({}, "", ROUTES.HOME.BASE);
+    updateView();
+  }
 }
 
 // Función para renderizar la vista correctamente
@@ -18,7 +26,7 @@ function updateView() {
   const app = document.querySelector("#app");
   app.innerHTML = ""; // Limpia el contenido anterior
 
-  const routeComponent = routes[window.location.pathname];
+  const routeComponent = routes[window.location.pathname] || Home;
 
   // Verifica que el componente sea un nodo válido antes de agregarlo
   if (typeof routeComponent === "function") {
