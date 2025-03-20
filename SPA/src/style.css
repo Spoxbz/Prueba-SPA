@@ -3,15 +3,23 @@
   padding: auto;
 }
 
+/* Estilos generales */
+.layout {
+  display: flex;
+}
+
 .start-container {
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
+  width: 100%;
 }
 
 .start-header {
   display: flex;
   flex-direction: column;
   background-color: gray;
+  width: 100%;
 }
 
 .start-title {

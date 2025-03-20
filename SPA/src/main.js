@@ -1,5 +1,6 @@
 import renderComponent, { navigateTo } from "./router.js";
 import "./style.css";
+import "./assets/styles/sidebar.css";
 
 document.addEventListener("DOMContentLoaded", () => {
   renderComponent(location.pathname);
