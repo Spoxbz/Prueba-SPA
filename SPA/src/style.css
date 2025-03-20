@@ -1,32 +1,28 @@
-.layout {
+* {
+  margin: 0;
+  padding: auto;
+}
+
+.start-container {
   display: flex;
-  height: 100vh;
+  flex-direction: column;
 }
 
-.sidebar {
-  width: 200px;
-  background: #333;
-  color: white;
-  padding: 20px;
+.start-header {
+  display: flex;
+  flex-direction: column;
+  background-color: gray;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
+.start-title {
+  align-self: center;
 }
 
-.sidebar li {
-  margin-bottom: 10px;
+.start-nav {
+  align-self: flex-end;
 }
 
-.sidebar-btn {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.sidebar-btn:hover {
-  text-decoration: underline;
+#content {
+  display: flex;
+  padding: 1rem;
 }

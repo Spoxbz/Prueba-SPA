@@ -5,7 +5,9 @@ export default function Login() {
   const content = document.createElement("div");
   content.innerHTML = `
     <h1>Iniciar Sesión</h1>
-    <login-form></login-form>
+    <form>
+      xd
+    </form>
     <button id="backToHome">Volver</button>
   `;
 

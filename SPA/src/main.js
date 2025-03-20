@@ -1,4 +1,5 @@
 import renderComponent, { navigateTo } from "./router.js";
+import "./style.css";
 
 document.addEventListener("DOMContentLoaded", () => {
   renderComponent(location.pathname);

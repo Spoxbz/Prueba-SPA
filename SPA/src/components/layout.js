@@ -5,8 +5,8 @@ export default function Layout(content) {
   container.innerHTML = `
     <div class="start-container">
       <header class="start-header">
-        <h1>Billing App - Test</h1>
-        <nav>
+        <h1 class="start-title">Billing App - Test</h1>
+        <nav class="start-nav">
           <button class="btn" id="homeBtn">Inicio</button>
           <button class="btn" id="aboutBtn">Acerca de</button>
           <button class="btn" id="contactBtn">Contacto</button>
