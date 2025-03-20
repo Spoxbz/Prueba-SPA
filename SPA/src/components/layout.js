@@ -1,10 +1,6 @@
-import Sidebar from "./sidebar";
 import { navigateTo } from "../router";
 
 export default function Layout(content) {
-  // Obtén el rol del usuario desde localStorage o asigna un valor por defecto
-  const userRole = localStorage.getItem("userRole") || "guest"; // Ahora sí está definido
-
   const container = document.createElement("div");
   container.innerHTML = `
     <div class="start-container">
@@ -17,7 +13,6 @@ export default function Layout(content) {
           <button class="btn" id="loginBtn">Login</button>
         </nav>
       </header>
-      <aside id="sidebar"></aside>
       <main id="content"></main>
     </div>
   `;
@@ -27,12 +22,6 @@ export default function Layout(content) {
   container.querySelector("#aboutBtn").addEventListener("click", () => navigateTo("/about"));
   container.querySelector("#contactBtn").addEventListener("click", () => navigateTo("/contact"));
   container.querySelector("#loginBtn").addEventListener("click", () => navigateTo("/login"));
-
-  // Asegurar que Sidebar y Content se adjunten correctamente
-  const sidebarElement = Sidebar(userRole);
-  if (sidebarElement) {
-    container.querySelector("#sidebar").appendChild(sidebarElement);
-  }
 
   if (content instanceof Node) {
     container.querySelector("#content").appendChild(content);

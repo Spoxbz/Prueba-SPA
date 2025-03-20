@@ -1,12 +1,10 @@
 import ROUTES from "./routes/variable_routes.js";
 import Home from "./components/home.js";
 import Login from "./components/login.js";
-import Dashboard from "./components/dashboard.js";
 
 const routes = {
   [ROUTES.HOME.BASE]: Home,
   [ROUTES.LOGIN.BASE]: Login,
-  [ROUTES.DASHBOARD.BASE]: Dashboard,
 };
 
 // Función para navegar entre rutas
