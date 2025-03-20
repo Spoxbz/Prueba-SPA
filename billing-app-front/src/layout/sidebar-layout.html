@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SideBar</title>
+    <script src="../routes/sidebar-routes-options.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=home" />
+    <style>
+      .sidebar-container {
+        width: 60px; /* Collapsed width */
+        height: 100vh;
+        background-color: #333;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        top: 0;
+        left: 0;
+        transition: width 0.3s ease;
+      }
+      .sidebar-container.open {
+        width: 150px; /* Expanded width */
+      }
+      .menu-item {
+        padding: 10px 20px;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s;
+      }
+      .menu-item:hover {
+        background-color: #444;
+      }
+      .menu-item i {
+        margin-right: 10px;
+      }
+      .menu-item span {
+        display: none;
+      }
+      .sidebar-container.open .menu-item span {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <div x-data="{ open: false }" :class="{'open': open}" class="sidebar-container">
+      <span class="hamburger" @click="open = !open">☰</span>
+      <div x-show="open" @click.away="open = false">
+        <div class="menu-item">
+          <span class="material-symbols-outlined">
+            home
+          </span>
+          <span>Home</span>
+        </div>
+        <div class="menu-item"><i class="icon-user"></i><span>Profile</span></div>
+        <div class="menu-item"><i class="icon-settings"></i><span>Settings</span></div>
+        <div class="menu-item"><i class="icon-logout"></i><span>Logout</span></div>
+      </div>
+    </div>
+  </body>
+</html>

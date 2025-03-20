@@ -53,7 +53,11 @@ async function loadRoute() {
     }
   } catch (error) {
     console.error("Error cargando la pagina (consola): ", error);
-    document.querySelector("#content").innerHTML = "<h2>Error al cargar la pagina :'D</h2>";
+
+    const contentElement = document.querySelector("#content");
+    if (contentElement) {
+      contentElement.innerHTML = "<h2>Error al cargar la pagina :'D</h2>";
+    }
   }
 }
 
