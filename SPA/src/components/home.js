@@ -1,5 +1,5 @@
 import { navigateTo } from "../router";
-import Counter from "./counter,js";
+import Counter from "./counter.js";
 import Layout from "./layout";
 
 export default function Home() {
